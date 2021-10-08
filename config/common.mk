@@ -128,7 +128,8 @@ PRODUCT_PACKAGES += \
     CustomFonts \
     Dialer \
     Contacts \
-    AboutPhone  
+    messaging \
+    AboutPhone
 
 # Custom Overlays
 # Settings
@@ -239,8 +240,26 @@ $(call inherit-product, vendor/aosp/config/audio.mk)
 # Bootanimation
 $(call inherit-product, vendor/aosp/config/bootanimation.mk)
 
+# Vanilla
+BLASTER_BUILDTYPE_VARIANT := VANILLA
+
 # GApps
+ifeq ($(BLASTER_BUILD_VARIANT), GAPPS)
 $(call inherit-product, vendor/gapps/config.mk)
+BLASTER_BUILDTYPE_VARIANT := GAPPS
+
+# MicroG
+else ifeq ($(BLASTER_BUILD_VARIANT), MICROG)
+$(call inherit-product, vendor/aosp/config/microg.mk)
+$(call inherit-product, packages/apps/Lawnchair/lawnchair.mk)
+PRODUCT_PACKAGES += LatinIME
+
+# Vanilla
+else
+BLASTER_BUILD_VARIANT := VANILLA
+$(call inherit-product, packages/apps/Lawnchair/lawnchair.mk)
+PRODUCT_PACKAGES += LatinIME
+endif
 
 # OTA
 $(call inherit-product, vendor/aosp/config/ota.mk)

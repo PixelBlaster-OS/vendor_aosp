@@ -1,9 +1,5 @@
 # RRO Overlays
 PRODUCT_PACKAGES += \
-    PixelSetupWizardAodOverlay \
-    FilesOverlay \
-    PixelDocumentsUIGoogleOverlay \
-    GBoardOverlay \
     IconPackCircularPixelLauncherOverlay \
     IconPackCircularPixelThemePickerOverlay \
     IconPackFilledPixelLauncherOverlay \
@@ -17,3 +13,11 @@ PRODUCT_PACKAGES += \
     FontSamOverlay \
     FontVictorOverlay
 
+
+ifeq ($(BLASTER_BUILD_VARIANT), GAPPS)
+PRODUCT_PACKAGES += \
+    PixelSetupWizardAodOverlay \
+    FilesOverlay \
+    PixelDocumentsUIGoogleOverlay \
+    GBoardOverlay
+endif
