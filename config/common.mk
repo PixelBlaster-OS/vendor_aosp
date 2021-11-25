@@ -106,7 +106,8 @@ PRODUCT_PACKAGES += \
 # Themes
 PRODUCT_PACKAGES += \
     AndroidBlackThemeOverlay \
-    ThemePicker
+    ThemePicker \
+    NavigationBarModeGesturalOverlayFS
 
 # Config
 PRODUCT_PACKAGES += \
