@@ -1,5 +1,4 @@
 # Set all versions
-BLASTER_BUILD_TYPE ?= UNOFFICIAL
 BLASTER_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 BLASTER_VERSION := 4.5
 TARGET_PRODUCT_SHORT := $(subst aosp_,,$(BLASTER_BUILD))
@@ -10,14 +9,12 @@ PRODUCT_COPY_FILES += vendor/aosp/prebuilt/common/bootanimation/bootanimation.zi
 BLASTER_DEVICE := $(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 LIST := $(shell cat vendor/aosp/blaster_devices)
 
-ifeq ($(filter $(BLASTER_DEVICE), $(LIST)), $(BLASTER_DEVICE))
-    ifeq ($(filter-out Official OFFICIAL, $(BLASTER_BUILD_TYPE)),)
+ifeq ($(BLASTER_BUILD_TYPE),OFFICIAL)
+    ifeq ($(filter $(BLASTER_DEVICE), $(LIST)), $(BLASTER_DEVICE))
         BLASTER_BUILD_TYPE := OFFICIAL
-    endif
 else
-    ifeq ($(filter-out Official OFFICIAL, $(BLASTER_BUILD_TYPE)),)
-        $(error "Device is not officially supported!")
-    endif
+      $(error "Device is not officially supported!")
+endif
 endif
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
