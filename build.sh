@@ -45,8 +45,8 @@ function showHelpAndExit {
 }
 
 # Setup getopt.
-long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,official:"
-getopt_cmd=$(getopt -o hcirv:t:j:m:o: --long "$long_opts" \
+long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,official"
+getopt_cmd=$(getopt -o hcirv:t:j:m:o --long "$long_opts" \
             -n $(basename $0) -- "$@") || \
             { echo -e "${CLR_BLD_RED}\nError: Getopt failed. Extra args\n${CLR_RST}"; showHelpAndExit; exit 1;}
 
