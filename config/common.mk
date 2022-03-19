@@ -127,7 +127,8 @@ PRODUCT_PACKAGES += \
     unrar \
     vim \
     wget \
-    zip
+    zip \
+    Launcher3
 
 # Filesystems tools
 PRODUCT_PACKAGES += \
