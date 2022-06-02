@@ -24,4 +24,12 @@ SHA256 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/sha256sum
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(BLASTER_TARGET_PACKAGE)
 	$(hide) $(SHA256) $(BLASTER_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(BLASTER_TARGET_PACKAGE).sha256sum
-	@echo "Package Complete: $(BLASTER_TARGET_PACKAGE)" >&2
+	@echo -e ${CL_CYN}"=============================-Package Details-============================"${CL_RST}
+	@echo -e ${CL_CYN}"File           : "${CL_MAG} $(BLASTER_TARGET_PACKAGE)${CL_RST}
+	@echo -e ${CL_CYN}"ZipName        : "${CL_MAG} PixelBlaster-$(BLASTER_VERSION)-$(BLASTER_BUILD)-$(BLASTER_BUILD_VARIANT)-$(BLASTER_BUILD_TYPE)-$(BLASTER_BUILD_DATE).zip${CL_RST}
+	@echo -e ${CL_CYN}"Build ID       : $(shell md5sum $(BLASTER_TARGET_PACKAGE) | awk '{print $$1}')"${CL_RST}
+	@echo -e ${CL_CYN}"Size           : "${CL_MAG}"$(shell du -hs $(BLASTER_TARGET_PACKAGE) | awk '{print $$1}')"${CL_RST}
+	@echo -e ${CL_CYN}"Size(Bytes)    : "${CL_MAG}"$(shell wc -c $(BLASTER_TARGET_PACKAGE) | awk '{print $$1}')"${CL_RST}
+	@echo -e ${CL_CYN}"DateTime       : "${CL_MAG}"$(shell grep "ro.build.date.utc=" $(PRODUCT_OUT)/system/build.prop | cut -d "=" -f 2)"${CL_RST}
+	@echo -e ${CL_CYN}"Build Type     : "${CL_MAG} $(BLASTER_BUILD_TYPE)${CL_RST}
+	@echo -e ${CL_CYN}"==========================================================================="${CL_RST}
