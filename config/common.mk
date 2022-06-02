@@ -139,7 +139,8 @@ PRODUCT_PACKAGES += \
     vim \
     wget \
     zip \
-    Launcher3
+    Launcher3 \
+    Updater
 
 # Filesystems tools
 PRODUCT_PACKAGES += \
