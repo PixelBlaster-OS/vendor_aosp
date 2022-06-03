@@ -41,12 +41,13 @@ function showHelpAndExit {
         echo -e "${CLR_BLD_BLU}  -j, --jobs            Specify jobs/threads to use${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -m, --module          Build a specific module${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -o, --official        Build official build${CLR_RST}"
+        echo -e "${CLR_BLD_BLU}  -u, --upload          Automatically upload release build and push OTA update${CLR_RST}"
         exit 1
 }
 
 # Setup getopt.
-long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,official"
-getopt_cmd=$(getopt -o hcirv:t:j:m:o --long "$long_opts" \
+long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,official,upload"
+getopt_cmd=$(getopt -o hcirv:t:j:m:ou --long "$long_opts" \
             -n $(basename $0) -- "$@") || \
             { echo -e "${CLR_BLD_RED}\nError: Getopt failed. Extra args\n${CLR_RST}"; showHelpAndExit; exit 1;}
 
@@ -62,7 +63,8 @@ while true; do
         -t|--build-type|t|build-type) BUILD_TYPE="$2"; shift;;
         -j|--jobs|j|jobs) JOBS="$2"; shift;;
         -m|--module|m|module) MODULE="$2"; shift;;
-        -o|--official|o|official) OFFICIAL=y; shift;;
+        -o|--official|o|official) OFFICIAL=y;;
+        -u|--upload|u|upload) UPLOAD=y;;
         --) shift; break;;
     esac
     shift
@@ -195,6 +197,17 @@ fi
 
     # Make package for distribution
     make bacon "$CMD"
+    export BUILD_ZIP=`cat blaster_zip`
+if [ ! -z "$OFFICIAL" ]
+then
+if [ ! -z "$UPLOAD" ] 
+then
+        echo -e "${CLR_BLD_GRN}Pushing OTA...${CLR_RST}"
+        ./ota.sh
+fi
+fi
+
+    rm blaster_zip
 
 echo -e ""
 

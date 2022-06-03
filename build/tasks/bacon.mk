@@ -24,6 +24,7 @@ SHA256 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/sha256sum
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(BLASTER_TARGET_PACKAGE)
 	$(hide) $(SHA256) $(BLASTER_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(BLASTER_TARGET_PACKAGE).sha256sum
+	$(hide) $(shell echo $(BLASTER_TARGET_PACKAGE) >> blaster_zip)
 	@echo -e ${CL_CYN}"=============================-Package Details-============================"${CL_RST}
 	@echo -e ${CL_CYN}"File           : "${CL_MAG} $(BLASTER_TARGET_PACKAGE)${CL_RST}
 	@echo -e ${CL_CYN}"ZipName        : "${CL_MAG} PixelBlaster-$(BLASTER_VERSION)-$(BLASTER_BUILD)-$(BLASTER_BUILD_VARIANT)-$(BLASTER_BUILD_TYPE)-$(BLASTER_BUILD_DATE).zip${CL_RST}
